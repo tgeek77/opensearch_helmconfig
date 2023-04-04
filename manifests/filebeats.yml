@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beats
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beats
+  template:
+    metadata:
+      labels:
+        app: beats
+    spec:
+      containers:
+        - name: beats
+          image: docker.elastic.co/beats/filebeat:7.12.2
+          env:
+            - name: ELASTICSEARCH_HOST
+              value: localhost:9200
+            - name: ELASTICSEARCH_USERNAME
+              value: elastic
+            - name: ELASTICSEARCH_PASSWORD
+              value: changeme
+          ports:
+            - containerPort: 5044
+          volumeMounts:
+            - name: config
+              mountPath: /etc/beats
+              subPath: config
+            - name: data
+              mountPath: /var/lib/beats
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+  - name: name-of-service-port
+    protocol: TCP
+    port: 80
+    targetPort: http-web-svc

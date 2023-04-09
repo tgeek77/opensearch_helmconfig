@@ -86,5 +86,5 @@ helm install opensearch-dashboards opensearch/opensearch-dashboards \
 The result of deploying OpenSearch and the Dashboard is that a simple single-node OpenSearch cluster will be created that can be used for testing purposes without needing to do port forwarding or other ugly temporary hacks.
 
 ## What's next?
-- Logstash
-- Beats
+- [Data Prepper](https://opensearch.org/docs/2.6/data-prepper/index/)
+- [Fluentd](https://www.fluentd.org/)
